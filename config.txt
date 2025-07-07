@@ -1,0 +1,50 @@
+#config (Besprechungsnotizen)
+
+denkweisen
+INX…CHAPTER…LETZTE-VO…PANEL…WS-MO…WS-MI
+0 creative thinking
+1 scientific thinking
+2 computational thinking
+3 design thinking
+4 responsible thinking
+5 critical thinking
+6 policy thinking
+7 criminal thinking
+
+formate
+0 miniprojekt 1
+denkweisen: 2 aus {1,2,3,4}
+event 0: 11.11.2025
+event 0 text: [formatname] abgeben!
+event 1: 5.11.2025
+event 1 text: vergiss nicht auf miniprojekt 1 am [event 0 datum]
+
+1 workshop
+denkweisen: 1 aus {1-8}
+event 0: [WS-MO|WS-MI**] + 1 woche
+event 0 text: finale abgabe des berichts vom [formatname]
+event 1: [WS-MO|WS-MI**] - 1 woche
+event 1 text: vorbesprechung mit tutorys
+event 2: [WS-MO|WS-MI**]
+event 2 text: workshooooop!
+** abhängig von gewählter denkweise
+
+2a games erste semesterhäfte
+denkweisen: 2 aus {1-4}
+event 0: 11.11.2025
+event 0 text
+event 1: [event 0 datum] + 1 woche
+event 1 text
+
+2b games zweite semesterhälfte
+denkweisen: 2 aus {5-8}
+event 0: 24.1.2026
+event 0 text
+event 1: [event 0 datum] + 1 woche
+event 1 text
+
+3 panel
+denkweisen: 1 aus {1-8}
+event 0: [panel-datum*]+1 woche
+event 0 text: bericht abgeben
+* abhängig von gewählter denkweise

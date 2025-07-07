@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<preset>
+
+<description/>
+
+<settings>
+<intro/>
+<comments>1</comments>
+<requiredentries>0</requiredentries>
+<requiredentriestoview>2</requiredentriestoview>
+<maxentries>1</maxentries>
+<rssarticles>0</rssarticles>
+<approval>0</approval>
+<manageapproved>0</manageapproved>
+<defaultsortdir>0</defaultsortdir>
+<defaultsort>0</defaultsort>
+</settings>
+
+<field>
+<type>menu</type>
+<name>Workshop</name>
+<description>1 Denkweise</description>
+<required>0</required>
+<param1>Scientific Thinking
+Computational Thinking
+Design Thinking
+Responsible Thinking
+Critical Thinking
+Criminal Thinking
+Policy Thinking
+Creative Thinking</param1>
+</field>
+
+<field>
+<type>checkbox</type>
+<name>Miniprojekt 1</name>
+<description>2 Denkweisen</description>
+<required>0</required>
+<param1>Scientific Thinking
+Computational Thinking
+Design Thinking
+Responsible Thinking</param1>
+</field>
+
+<field>
+<type>menu</type>
+<name>Panel-Diskussion</name>
+<description>1 Denkweise</description>
+<required>0</required>
+<param1>Scientific Thinking
+Computational Thinking
+Design Thinking
+Responsible Thinking
+Critical Thinking
+Criminal Thinking
+Policy Thinking
+Creative Thinking</param1>
+</field>
+
+<field>
+<type>checkbox</type>
+<name>Games</name>
+<description>2 Denkweise</description>
+<required>0</required>
+<param1>Scientific Thinking
+Computational Thinking
+Design Thinking
+Responsible Thinking
+Critical Thinking
+Criminal Thinking
+Policy Thinking
+Creative Thinking</param1>
+</field>
+
+<field>
+<type>checkbox</type>
+<name>Miniprojekt 2</name>
+<description>2 Denkweisen</description>
+<required>0</required>
+<param1>Critical Thinking
+Criminal Thinking
+Policy Thinking
+Creative Thinking</param1>
+</field>
+
+<field>
+<type>menu</type>
+<name>Gruppen</name>
+<description>W&#xE4;hle zwischen Montags- und Mittwochsgruppe</description>
+<required>0</required>
+<param1>Montag
+Mittwoch</param1>
+</field>
+
+</preset>

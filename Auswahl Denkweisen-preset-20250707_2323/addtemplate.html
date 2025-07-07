@@ -1,0 +1,1243 @@
+<style>
+  /* ===== Global Variables (colors, spacing) ===== */
+  :root {
+    --clr-bg: #fcfdff;
+    --clr-text: #2e2e2e;
+    --clr-green: #a7f3d0;
+    --clr-green-hover: #61cfa3;
+    --clr-error: #fdecea;
+    --clr-error-text: #b3261e;
+    --clr-border: #d8dee4;
+    --radius: 10px;
+    --tuwel-blue: #0065a4;
+    --tuwel-blue-hover: #004b7c;
+  }
+
+  /* ===== Basic Layout & Typography ===== */
+  html,
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--clr-bg);
+    color: var(--clr-text);
+    margin: 20px;
+    line-height: 1.6;
+    overscroll-behavior: none;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 28px;
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: #222;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius);
+    padding: 30px 35px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .container:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  /* ===== Info Boxes (Instructions / Denkweisen) ===== */
+  .instruction,
+  .denkweisen-display {
+    background: #eef4fb;
+    color: #496677;
+    border: 1px solid #c4d1e0;
+    border-radius: var(--radius);
+    padding: 16px 22px;
+    margin-bottom: 30px;
+    font-size: 1.05em;
+    box-shadow: inset 0 1px 3px #dce7f2;
+    user-select: none;
+  }
+
+  /* ===== Error & Status Messages ===== */
+  #error-message,
+  .status-error,
+  .status-success {
+    padding: 14px 18px;
+    border-radius: var(--radius);
+    font-weight: 700;
+    margin-top: 20px;
+    display: none;
+    text-align: center;
+  }
+
+  #error-message,
+  .status-error {
+    background: var(--clr-error);
+    color: var(--clr-error-text);
+    border: 1px solid #f87171;
+    box-shadow: inset 0 0 6px #f9b3b0;
+  }
+
+  .status-success {
+    background: #e6f4ea;
+    color: #065f46;
+    border: 1px solid #34d399;
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.3);
+  }
+
+  /* ==== Task Cards ===== */
+  .task {
+    border: 1px solid #cbd5e1;
+    padding: 20px 26px;
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.4s ease, border-color 0.3s ease;
+    position: relative;
+  }
+
+  .task:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-color: #8eb9f8;
+  }
+
+  .task > label {
+    font-weight: 800;
+    font-size: 1.45em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #1e293b;
+    user-select: none;
+    margin-bottom: 10px;
+  }
+
+  .task-count {
+    font-size: 0.95em;
+    margin-bottom: 16px;
+    font-weight: 700;
+    color: #64748b;
+  }
+
+  .task-hint {
+    font-size: 0.9em;
+    color: #6b7280;
+    margin-bottom: 8px;
+  }
+
+  .task-warning {
+    display: none;
+    color: var(--clr-error-text);
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  /* ===== Form Controls (Select, Checkboxes) ===== */
+  select {
+    width: 100%;
+    padding: 9px 14px;
+    margin: 10px 0 14px;
+    border: 1.8px solid #a6adba;
+    border-radius: 8px;
+    font-size: 1.05em;
+    background: #fefefe;
+    transition: border-color 0.35s ease, box-shadow 0.35s ease;
+    appearance: none;
+  }
+
+  select:focus {
+    border-color: #4c9aff;
+    outline: none;
+    box-shadow: 0 0 6px #82b1ffcc;
+    background: #fff;
+  }
+
+  .task input[type="checkbox"]:disabled + label {
+    color: #9ca3af;
+    cursor: not-allowed;
+  }
+
+  /* ===== Buttons (Reset, Check, Download) =====*/
+  .button,
+  .reset-task,
+  #download-ical,
+  #check-selections {
+    font-weight: 700;
+    font-size: 1em;
+    border: none;
+    border-radius: 0.6rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  #download-ical {
+    background-color: var(--tuwel-blue);
+    color: white;
+    padding: 10px 18px;
+    margin-top: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.4rem;
+    transition: background-color 0.2s ease;
+    box-shadow: none;
+  }
+
+  #download-ical:hover {
+    background-color: var(--tuwel-blue-hover);
+  }
+
+  .reset-task {
+    background-color: #f1f5f9; /* sehr helles Grau */
+    color: #374151; /* dunkles Grau */
+    border: 1px solid var(--clr-border);
+    padding: 8px 14px;
+    font-weight: 500;
+    border-radius: 0.4rem;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+  }
+
+  .reset-task:hover {
+    background-color: #e2e8f0;
+    color: #1e293b;
+    border-color: #cbd5e1;
+  }
+
+  #check-selections {
+    background: var(--clr-green);
+    color: #065f46;
+    padding: 12px 24px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  }
+
+  #check-selections:hover {
+    background: var(--clr-green-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+  }
+
+  /* ==== Layout Utilities ===== */
+  .global-reset-container {
+    text-align: right;
+    margin-top: 36px;
+  }
+
+  .ical-download {
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  #global-reset.as-link {
+    all: unset;
+    color: #64748b;
+    font-size: 0.9em;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    background: #f1f5f9;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-block;
+  }
+
+  #global-reset.as-link:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+  }
+
+  .date-fields-output {
+    margin-top: 20px;
+  }
+
+  #already-chosen-container {
+    display: none;
+    margin-bottom: 12px;
+  }
+
+  .entry-form {
+    display: grid;
+    gap: 28px;
+  }
+
+  /* ==== Status Bar for Denkweisen ===== */
+  .denkweisen-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: var(--clr-bg); /* helles TUWEL-Hintergrund */
+    border: 1px solid var(--clr-border);
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    font-size: 0.95em;
+    user-select: none;
+  }
+
+  .denkweise-chip {
+    padding: 4px 12px;
+    border-radius: 9999px;
+    border: 1px solid var(--clr-border);
+    background: #fff;
+    color: var(--clr-text);
+    font-weight: 500;
+  }
+
+  .denkweise-chip.taken {
+    background-color: var(--tuwel-blue);
+    border-color: var(--tuwel-blue-hover);
+    color: white;
+  }
+
+  .denkweise-chip.taken:hover {
+    background-color: var(--tuwel-blue-hover);
+  }
+
+  .denkweise-chip.free {
+    background-color: #f1f5f9;
+    border-color: var(--clr-border);
+    color: #363434;
+  }
+</style>
+
+<body>
+  <!-- TODO: ROTE RÜCKMELDUNG AUSBLENDEN? -->
+  <div class="instruction">
+    <p>
+      Hier wählen Sie für jede Aufgabe die Denkweise(n) aus, die Sie dazu
+      bearbeiten möchten. Achten Sie darauf, dass jede Denkweise nur einmal
+      gewählt wird und dass Sie insgesamt
+      <strong>8 Denkweisen</strong> auswählen.
+    </p>
+
+    <p>
+      Wenn Sie fertig mit dem Eintragen sind, klicken Sie auf
+      <strong>"Überprüfen"</strong>. Wenn Ihre Auswahl den Kriterien entspricht,
+      wird ein <strong>grünes Hackerl</strong> angezeigt und Sie können Ihren
+      Eintrag speichern sowie die Termine exportieren.
+    </p>
+
+    <p>Am besten wählen Sie die Denkweisen in folgender Reihenfolge aus:</p>
+
+    <ul>
+      <li>Workshop</li>
+      <li>Miniprojekt 1</li>
+      <li>Miniprojekt 2</li>
+      <li>Panel-Diskussion</li>
+      <li>Games</li>
+    </ul>
+
+    <p>
+      So vermeiden Sie, dass am Ende zu wenige Denkweisen für die Miniprojekte
+      oder die Games übrig bleiben.
+    </p>
+
+    <p>Bei Unterstützungsbedarf wenden Sie sich an Ihre:n Tutor:in.</p>
+  </div>
+
+  <!-- Status Bar for Denkweisen -->
+  <div class="font-weight-bold">
+    Hier sehen Sie, welche Denkweisen Sie bereits ausgewählt haben. Ausgewählte
+    Denkweisen werden blaumarkiert.
+  </div>
+
+  <div
+    id="denkweisen-status-bar"
+    class="denkweisen-display"
+    style="margin-bottom: 20px"
+  ></div>
+
+  <!-- === Start Section Selection of Denkweisen === -->
+  <div id="defaulttemplate-addentry">
+    <div class="mb-3 pt-3" id="group-select-wrapper">
+      <div class="font-weight-bold">Gruppen</div>
+      [[Gruppen]]
+    </div>
+
+    <div class="mb-3 pt-3 task" data-field="Workshop" data-max="1">
+      <div class="font-weight-bold">Workshop</div>
+      <div class="task-hint">Wählen Sie 1 aus</div>
+      [[Workshop]]
+      <button type="button" class="reset-task">Zurücksetzen</button>
+      <div class="date-fields-output" style="margin-top: 20px"></div>
+    </div>
+
+    <div class="mb-3 pt-3 task" data-field="MP1" data-max="2">
+      <div class="font-weight-bold">Miniprojekt 1</div>
+      <div class="task-hint">Wählen Sie 2 aus</div>
+      [[Miniprojekt 1]]
+      <button type="button" class="reset-task">Zurücksetzen</button>
+      <div class="date-fields-output" style="margin-top: 20px"></div>
+      <div class="task-warning"></div>
+    </div>
+
+    <div class="mb-3 pt-3 task" data-field="MP2" data-max="2">
+      <div class="font-weight-bold">Miniprojekt 2</div>
+      <div class="task-hint">Wählen Sie 2 aus</div>
+      [[Miniprojekt 2]]
+      <button type="button" class="reset-task">Zurücksetzen</button>
+      <div class="date-fields-output" style="margin-top: 20px"></div>
+      <div class="task-warning"></div>
+    </div>
+
+    <div class="mb-3 pt-3 task" data-field="Panel-Diskussion" data-max="1">
+      <div class="font-weight-bold">Panel-Diskussion</div>
+      <div class="task-hint">Wählen Sie 1 aus</div>
+      [[Panel-Diskussion]]
+      <button type="button" class="reset-task">Zurücksetzen</button>
+      <div class="date-fields-output" style="margin-top: 20px"></div>
+    </div>
+
+    <div class="mb-3 pt-3 task" data-field="Games" data-max="2">
+      <div class="font-weight-bold">Games</div>
+      <div class="task-hint">Wählen Sie 2 aus</div>
+      [[Games]]
+      <button type="button" class="reset-task">Zurücksetzen</button>
+      <div class="date-fields-output" style="margin-top: 20px"></div>
+      <div class="task-warning"></div>
+    </div>
+    <!-- === Ende Section Selection of Denkweisen === -->
+
+    <!-- === Start Section Dates & Export iCal File === -->
+    <div id="dates-summary-container" style="display: none">
+      <h3>Ihre ausgewählten Termine</h3>
+      <ul
+        id="dates-summary-list"
+        style="list-style-type: none; padding: 0"
+      ></ul>
+    </div>
+
+    <div class="global-reset-container">
+      <button type="button" id="global-reset" class="as-link">
+        Alles zurücksetzen
+      </button>
+    </div>
+
+    <div class="überprüfungsbutton">
+      <button type="button" id="check-selections">✅ Überprüfen</button>
+      <div id="status-message" style="display: none"></div>
+    </div>
+
+    <div class="ical-download">
+      <button type="button" id="download-ical" class="as-link">
+        📅 Termine als iCal herunterladen
+      </button>
+    </div>
+    <!-- === End Section Dates & Export iCal File === -->
+  </div>
+</body>
+
+<script>
+  // ###################################### TO BE MODIFIED ######################################
+
+  /**
+   * LECTURES constant contains the lecture data.
+   * It includes the Denkweise (way of thinking), the date of the lecture,
+   * the date of the panel discussion, and the priority of the lecture.
+   * The priority is defined as 1-8, where 1 is the first lecture.
+   */
+  const LECTURES = {
+    Vorlesungen: [
+      {
+        Denkweise: "Scientific Thinking",
+        Datum: "2026-01-01",
+        Panel: "2026-01-02",
+        Priorität: 1,
+      },
+      {
+        Denkweise: "Computational Thinking",
+        Datum: "2026-01-03",
+        Panel: "2026-01-04",
+        Priorität: 2,
+      },
+      {
+        Denkweise: "Design Thinking",
+        Datum: "2026-01-05",
+        Panel: "2026-01-06",
+        Priorität: 3,
+      },
+      {
+        Denkweise: "Responsible Thinking",
+        Datum: "2026-01-07",
+        Panel: "2026-01-08",
+        Priorität: 4,
+      },
+      {
+        Denkweise: "Critical Thinking",
+        Datum: "2026-01-09",
+        Panel: "2026-01-10",
+        Priorität: 5,
+      },
+      {
+        Denkweise: "Policy Thinking",
+        Datum: "2026-01-11",
+        Panel: "2026-01-12",
+        Priorität: 6,
+      },
+      {
+        Denkweise: "Criminal Thinking",
+        Datum: "2026-01-13",
+        Panel: "2026-01-14",
+        Priorität: 7,
+      },
+      {
+        Denkweise: "Creative Thinking",
+        Datum: "2026-01-15",
+        Panel: "2026-01-16",
+        Priorität: 8,
+      },
+    ],
+  };
+
+  /**
+   * TASKS constant defines the maximum number of tasks for each Denkweise.
+   * Each task type has a maximum number of selections allowed.
+   */
+  const TASKS = {
+    Formate: [
+      { TYPE: "Workshop", MAX: 1 },
+      { TYPE: "MP1", MAX: 2 },
+      { TYPE: "MP2", MAX: 2 },
+      { TYPE: "Games", MAX: 2 },
+      { TYPE: "Panel-Diskussion", MAX: 1 },
+    ],
+  };
+
+  /**
+   * Define the dates of Excercises for Monday and Wednesday groups
+   */
+  const Exercises = {
+    MONDAY: [
+      "2026-01-01",
+      "2026-01-08",
+      "2026-01-15",
+      "2026-01-22",
+      "2026-01-29",
+      "2026-02-05",
+      "2026-02-12",
+      "2026-02-19",
+    ],
+    WEDNESDAY: [
+      "2026-01-03",
+      "2026-01-10",
+      "2026-01-17",
+      "2026-01-24",
+      "2026-01-31",
+      "2026-02-07",
+      "2026-02-14",
+      "2026-02-21",
+    ],
+  };
+
+  /**
+   * Checks if the given group is a Monday group.
+   */
+  function isMondayGroup(g) {
+    return g === "Montag";
+  }
+
+  /**
+   * Rebuilds the global selections from the DOM.
+   * This is used to ensure that the global selections are always up-to-date
+   * with the current state of the form.
+   */
+  function getDateByTaskType(taskType, groupDay, denkweise) {
+    if (!groupDay)
+      return "Bitte wählen Sie aus, ob Ihre Gruppe am Montag oder Mittwoch ist.";
+
+    const days = isMondayGroup(groupDay)
+      ? Exercises.MONDAY
+      : Exercises.WEDNESDAY;
+    const index = LECTURES.Vorlesungen.findIndex(
+      (obj) => obj.Denkweise === denkweise
+    );
+    if (index === -1) return "Unbekannt";
+
+    switch (taskType) {
+      case "Workshop":
+        const prio = LECTURES.Vorlesungen[index].Priorität;
+        const wsDate = days[prio - 1];
+        return wsDate;
+      case "MP1":
+        return days[4];
+      case "MP2":
+        return days[7];
+      case "Games":
+        return days[7];
+      case "Panel-Diskussion":
+        const obj = LECTURES.Vorlesungen.find((v) => v.Denkweise === denkweise);
+        if (!obj) return "Unbekannt";
+        const panelDate = new Date(obj.Panel);
+        panelDate.setDate(panelDate.getDate() + 7);
+        return panelDate.toISOString().split("T")[0];
+      default:
+        return "Unbekannt";
+    }
+  }
+
+  // ###################################### DO NOT MODIFY BELOW THIS LINE ######################################
+
+  const GROUP = -1; // Monday/Wednesday group
+  const globalSelections = new Map(); // Store global selections
+
+  /**
+   * Collects all globally selected thinking styles (from dropdowns and checkboxes).
+   * Used to track which Denkweisen are already taken globally.
+   * @returns {Array} Array of selected Denkweisen.
+   */
+  function getGlobalSelected() {
+    const selected = [];
+    document.querySelectorAll("select").forEach((select) => {
+      if (select.value && select.value !== "0") selected.push(select.value);
+    });
+    document.querySelectorAll(".task input[type=checkbox]").forEach((cb) => {
+      if (cb.checked) selected.push(cb.value);
+    });
+    return selected;
+  }
+
+  /**
+   * Validates whether each task has the required number of selected Denkweisen.
+   * Displays a warning message below each invalid task.
+   *
+   * @returns {boolean} True if all task selections are valid, false otherwise.
+   */
+  function checkIfSelectionIsValid() {
+    let valid = true;
+
+    TASKS.Formate.forEach(({ TYPE, MAX }) => {
+      // Map TYPE to HTML data-field name
+
+      const required = MAX;
+      const taskDiv = document.querySelector(`.task[data-field="${TYPE}"]`);
+      if (!taskDiv) return;
+
+      const selectedCheckboxes = taskDiv.querySelectorAll(
+        'input[type="checkbox"]:checked'
+      );
+      const selectedDropdowns = Array.from(
+        taskDiv.querySelectorAll("select")
+      ).filter((sel) => sel.value && sel.value !== "0");
+
+      const count = selectedCheckboxes.length + selectedDropdowns.length;
+
+      let warning = taskDiv.querySelector(".task-warning");
+      if (!warning) {
+        warning = document.createElement("div");
+        warning.classList.add("task-warning");
+        warning.style.color = "#b3261e";
+        warning.style.fontWeight = "bold";
+        warning.style.marginTop = "10px";
+        taskDiv.appendChild(warning);
+      }
+
+      if (count < required) {
+        warning.textContent = `Bitte wählen Sie ${required} Denkweisen aus.`;
+        warning.style.display = "block";
+        valid = false;
+      } else {
+        warning.style.display = "none";
+      }
+    });
+
+    return valid;
+  }
+
+  /**
+   * Disables Denkweisen options that are already globally selected.
+   *
+   * - Globally selected Denkweisen should not be selectable again in other tasks.
+   * - For dropdowns: disables options already selected elsewhere, unless it's the currently selected one.
+   * - For checkboxes: disables unchecked boxes if their value is globally selected or the max allowed selections
+   *   for that task has been reached.
+   */
+  function disableGloballySelectedOptions() {
+    const selected = getGlobalSelected(); // Globally selected Denkweisen values
+
+    // Dropdowns: Disable options that are already globally selected
+    document.querySelectorAll("select").forEach((select) => {
+      const currentVal = select.value;
+      Array.from(select.options).forEach((opt) => {
+        if (opt.value === "") return; // Ignore placeholder
+        opt.disabled = opt.value !== currentVal && selected.includes(opt.value);
+      });
+    });
+
+    // Checkboxes: Disable unchecked if already selected globally or task limit reached
+    document.querySelectorAll(".task").forEach((task) => {
+      const max = parseInt(task.dataset.max); // Max selections allowed
+      const checkboxes = task.querySelectorAll('input[type="checkbox"]');
+      let count = 0;
+      checkboxes.forEach((cb) => {
+        if (cb.checked) count++;
+      });
+      checkboxes.forEach((cb) => {
+        cb.disabled =
+          !cb.checked && (selected.includes(cb.value) || count >= max);
+      });
+    });
+  }
+
+  /**
+   * Sets up all event listeners for the interface.
+   *
+   * - Registers listeners for all dropdowns, checkboxes, reset buttons, iCal export, and group change.
+   * - Must be called once during initialization.
+   */
+  function setupEvents() {
+    addTaskInputListeners();
+    addLocalResetListeners();
+
+    const globalResetButton = document.getElementById("global-reset");
+    if (globalResetButton) {
+      globalResetButton.addEventListener("click", handleGlobalReset);
+    }
+
+    const checkBtn = document.getElementById("check-selections");
+    if (checkBtn) {
+      checkBtn.addEventListener("click", handleCheckSelections);
+    }
+
+    // Add listeners for group selection change - recalculate dates after change
+    const groupSelect = document.getElementById("group-select-wrapper");
+    if (groupSelect) {
+      groupSelect.addEventListener("change", afterAnyChange);
+    }
+
+    const downloadBtn = document.getElementById("download-ical");
+    if (downloadBtn) {
+      downloadBtn.addEventListener("click", handleICalDownload);
+    }
+  }
+
+  /**
+   * Adds listeners to dropdowns and checkboxes inside task sections.
+   *
+   * - On change, triggers:
+   *   - `afterAnyChange()` to update global state and UI
+   */
+  function addTaskInputListeners() {
+    const updateHandler = (el) => {
+      afterAnyChange();
+    };
+
+    document.querySelectorAll(".task select").forEach((dropdown) => {
+      dropdown.addEventListener("change", () => updateHandler(dropdown));
+    });
+
+    document
+      .querySelectorAll(".task input[type=checkbox]")
+      .forEach((checkbox) => {
+        checkbox.addEventListener("change", () => updateHandler(checkbox));
+      });
+  }
+
+  /**
+   * Adds listeners to local reset buttons within each task block.
+   *
+   * - Clears dropdown and checkbox selections inside the same task.
+   * - Clears output date field and updates global state.
+   */
+  function addLocalResetListeners() {
+    document.querySelectorAll(".reset-task").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const task = btn.closest(".task");
+        if (!task) return;
+
+        // Reset dropdowns
+        task.querySelectorAll("select").forEach((s) => (s.value = "0"));
+
+        // Reset checkboxes
+        task
+          .querySelectorAll('input[type="checkbox"]')
+          .forEach((cb) => (cb.checked = false));
+
+        // Hide and clear date output
+        const output = task.querySelector(".date-fields-output");
+        if (output) {
+          output.textContent = "";
+          output.style.display = "none";
+        }
+
+        globalSelections.delete(task.dataset.field);
+        afterAnyChange();
+      });
+    });
+  }
+
+  /**
+   * Handles the global reset button.
+   *
+   * - Clears *all* dropdowns, checkboxes, outputs, and global selection state.
+   */
+  function handleGlobalReset() {
+    document.querySelectorAll(".task select").forEach((s) => (s.value = "0"));
+    document
+      .querySelectorAll('input[type="checkbox"]')
+      .forEach((cb) => (cb.checked = false));
+
+    document.querySelectorAll(".date-fields-output").forEach((el) => {
+      el.textContent = "";
+      el.style.display = "none";
+    });
+
+    // Hide error messages under tasks
+    document.querySelectorAll(".task-warning").forEach((el) => {
+      el.style.display = "none";
+      el.textContent = "";
+    });
+
+    // Hide status messages
+    const status = document.getElementById("status-message");
+    if (status) {
+      status.style.display = "none";
+      status.textContent = "";
+      status.className = "";
+    }
+
+    globalSelections.clear();
+    afterAnyChange();
+  }
+
+  /**
+   * Validates and applies the current selection when "Check Selection" is clicked.
+   *
+   * - Rebuilds internal data model from DOM state.
+   * - Updates validation message in `#status-message`.
+   * - Disables globally selected options.
+   * - Shows dates summary if all tasks are complete.
+   */
+  function handleCheckSelections() {
+    rebuildSelectionsFromDOM();
+    const status = document.getElementById("status-message");
+    const valid = checkIfSelectionIsValid();
+
+    status.textContent = valid
+      ? "✅ Alle Denkweisen korrekt ausgewählt! Sie können Ihre Einträge nun speichern."
+      : "❌ Bitte überprüfen Sie Ihre Auswahl!";
+    status.className = valid ? "status-success" : "status-error";
+    status.style.display = "block";
+
+    disableGloballySelectedOptions();
+    showDatesSummaryIfComplete();
+  }
+
+  /**
+   * Rebuilds the global selections from the current DOM state.
+   *
+   * - Collects all selected Denkweisen from dropdowns and checkboxes.
+   * - Updates the globalSelections map with the current state.
+   */
+  function updateDenkweisenStatusBar() {
+    const bar = document.getElementById("denkweisen-status-bar");
+    if (!bar) return;
+
+    const selected = getGlobalSelected();
+    const allDenkweisen = LECTURES.Vorlesungen.map((v) => v.Denkweise);
+
+    const taken = new Set(selected);
+    // based on status mark free/taken and create chips with different styles
+    const html = allDenkweisen
+      .map((dw) => {
+        const status = taken.has(dw) ? "taken" : "free";
+        return `<span class="denkweise-chip ${status}">${dw}</span>`;
+      })
+      .join("");
+
+    bar.innerHTML = html;
+  }
+
+  /**
+   * Generates and triggers download of iCal file with selected task dates.
+   *
+   * - Rebuilds selections and compiles `.ics` file.
+   * - Shows alert if no events are selected.
+   * - Triggers download via Blob and anchor click.
+   */
+  function handleICalDownload() {
+    rebuildSelectionsFromDOM();
+    const events = generateICalEventsFromSelections();
+
+    if (!events.length) {
+      alert("Keine Termine gefunden – bitte Denkweisen auswählen!");
+      return;
+    }
+
+    let ical = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Denkweisen Kalender//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\n`;
+    ical += events.join("\n") + "\nEND:VCALENDAR";
+
+    const blob = new Blob([ical], { type: "text/calendar;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "denkweisen-termine.ics";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  //--------******** iCal Section ********--------//
+
+  // Helper to get the German month to numeric
+  function germanDateToYYYYMMDD(dateStr) {
+    // Accepts "2026-01-22" or "22. Januar 2026" etc.
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr.replace(/-/g, "");
+    // else try "22. Januar 2026"
+    const months = {
+      Januar: "01",
+      Februar: "02",
+      März: "03",
+      April: "04",
+      Mai: "05",
+      Juni: "06",
+      Juli: "07",
+      August: "08",
+      September: "09",
+      Oktober: "10",
+      November: "11",
+      Dezember: "12",
+    };
+    const m = dateStr.match(/(\d{2})\.\s*(\w+)\s*(\d{4})/);
+    if (!m) return "";
+    return m[3] + months[m[2]] + m[1];
+  }
+
+  // Adds days to ISO string ("2026-01-03", 7) => "2026-01-10"
+  function addDays(dateISO, days) {
+    const d = new Date(dateISO);
+    d.setDate(d.getDate() + days);
+    return d.toISOString().split("T")[0];
+  }
+
+  // Compose iCal VEVENT
+  function createICalEvent(summary, description, dateISO) {
+    const date = dateISO.replace(/-/g, ""); // 2026-01-22
+    return `BEGIN:VEVENT
+            SUMMARY:${summary}
+            DESCRIPTION:${description}
+            DTSTART;VALUE=DATE:${date}
+            DTEND;VALUE=DATE:${date}
+            BEGIN:VALARM
+            TRIGGER:-P14D
+            ACTION:DISPLAY
+            DESCRIPTION:Erinnerung: ${summary} in 2 Wochen
+            END:VALARM
+            BEGIN:VALARM
+            TRIGGER:-P7D
+            ACTION:DISPLAY
+            DESCRIPTION:Erinnerung: ${summary} in 1 Woche
+            END:VALARM
+            END:VEVENT`;
+  }
+
+  // Get the current group number (student group selection)
+  function getSelectedGroupDay() {
+    const wrapper = document.getElementById("group-select-wrapper");
+    if (wrapper) {
+      const select = wrapper.querySelector("select");
+      if (select) {
+        return select.value.trim();
+      }
+    }
+  }
+
+  // The main logic that builds all iCal events from selections
+  function generateICalEventsFromSelections() {
+    const events = []; // Stores all created iCal events
+    // Sets the group day based on the student selection
+    const groupDay = getSelectedGroupDay();
+    const days = isMondayGroup(groupDay)
+      ? Exercises.MONDAY
+      : Exercises.WEDNESDAY;
+
+    // Iterate over all selected tasks and their values (from globalSelections Map)
+    for (const [taskType, value] of globalSelections.entries()) {
+      // Skip if no value was selected for this task type
+      if (!value || (Array.isArray(value) && value.length === 0)) continue;
+      // Ensure 'values' is always an array
+      const values = Array.isArray(value) ? value : [value];
+
+      values.forEach((denkweise) => {
+        // Find the index of the lecture that matches the current 'Denkweise'
+        const idx = LECTURES.Vorlesungen.findIndex(
+          (obj) => obj.Denkweise === denkweise
+        );
+        const vorlesung = LECTURES.Vorlesungen[idx];
+
+        // ---- WORKSHOP EVENTS ----
+        // If the task type is a workshop, create three events:
+        //   1. The workshop itself
+        //   2. The preliminary meeting one week before
+        //   3. The report submission one week after
+        if (/workshop/i.test(taskType)) {
+          const wsDate = days[idx] || vorlesung.Datum;
+          events.push(
+            createICalEvent(`Workshop: ${denkweise}`, "Workshooooop!", wsDate)
+          );
+          events.push(
+            createICalEvent(
+              `Vorbesprechung: Workshop ${denkweise}`,
+              "Vorbesprechung mit Tutorys",
+              addDays(wsDate, -7)
+            )
+          );
+          events.push(
+            createICalEvent(
+              `Abgabe Bericht: Workshop ${denkweise}`,
+              "Finale Abgabe des Berichts",
+              addDays(wsDate, 7)
+            )
+          );
+        }
+        // ---- MINIPROJEKT 1 & 2 EVENTS ----
+        // If the task type is MP1 or MP2, create:
+        //   1. The miniproject deadline event
+        //   2. A reminder one week before the deadline
+        else if (/mp1|mp2/i.test(taskType)) {
+          const projDate = days[idx] || vorlesung.Datum;
+          events.push(
+            createICalEvent(
+              `${taskType}: ${denkweise}`,
+              `${taskType} abgeben!`,
+              projDate
+            )
+          );
+          events.push(
+            createICalEvent(
+              `Reminder: ${taskType} ${denkweise}`,
+              `Vergiss nicht auf ${taskType} am ${projDate}`,
+              addDays(projDate, -7)
+            )
+          );
+        }
+        // ---- PANEL DISCUSSION EVENTS ----
+        // If the task type is a panel or discussion, create a report submission event 1 week after the panel
+        else if (/diskussion|panel/i.test(taskType)) {
+          const panelDate = vorlesung.Panel;
+          const abgabeDate = addDays(panelDate, 7);
+          events.push(
+            createICalEvent(
+              `Panel-Diskussion: ${denkweise}`,
+              "Bericht abgeben",
+              abgabeDate
+            )
+          );
+        }
+        //  GAMES
+        // ---- GAMES EVENTS ----
+        // If the task type is games, create:
+        //   1. The main games event
+        //   2. A follow-up discussion one week after
+        else if (/spiele|game/i.test(taskType)) {
+          const gameDate = days[idx] || vorlesung.Datum;
+          events.push(
+            createICalEvent(`Games: ${denkweise}`, "Games (Semester)", gameDate)
+          );
+          events.push(
+            createICalEvent(
+              `Games Nachbesprechung: ${denkweise}`,
+              "Nachbesprechung",
+              addDays(gameDate, 7)
+            )
+          );
+        }
+        // - Here we could add more stuff, if necessary in the future
+      });
+    }
+    return events;
+  }
+
+  // Trigger iCal download when button clicked
+  document
+    .getElementById("download-ical")
+    .addEventListener("click", function () {
+      rebuildSelectionsFromDOM(); // rebuilds selection in case of previous entry
+      const events = generateICalEventsFromSelections();
+      if (!events.length) {
+        alert("Keine Termine gefunden – bitte Denkweisen auswählen!");
+        return;
+      }
+      let ical = `BEGIN:VCALENDAR
+                VERSION:2.0
+                PRODID:-//Denkweisen Kalender//EN
+                CALSCALE:GREGORIAN
+                METHOD:PUBLISH
+                `;
+      ical += events.join("\n");
+      ical += "\nEND:VCALENDAR";
+      // Download as file
+      const blob = new Blob([ical], { type: "text/calendar;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "denkweisen-termine.ics";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+  // ######################################
+  // Display deadlines/dates after all formats and Denkweisen are selected
+  // ######################################
+
+  function getSummaryDates() {
+    const result = [];
+    const groupDay = getSelectedGroupDay();
+    if (!groupDay) {
+      alert(
+        "Bitte wählen Sie, ob Ihre Gruppe am Mo/Mi ist, um die Termine anzuzeigen."
+      );
+      return;
+    }
+
+    for (const [taskType, value] of globalSelections.entries()) {
+      if (!value || (Array.isArray(value) && value.length === 0)) continue;
+      const values = Array.isArray(value) ? value : [value];
+
+      const refDenkweise = values[0]; // use first selected dw as reference
+      const date = getDateByTaskType(taskType, groupDay, refDenkweise);
+
+      result.push({
+        task: taskType,
+        denkweisen: values,
+        date: date,
+      });
+    }
+
+    return result.sort((a, b) => a.date.localeCompare(b.date));
+  }
+
+  function showDatesSummaryIfComplete() {
+    const container = document.getElementById("dates-summary-container");
+    const list = document.getElementById("dates-summary-list");
+
+    const allTasksCompleted = TASKS.Formate.every(({ TYPE, MAX }) => {
+      const val = globalSelections.get(TYPE);
+      if (!val) return false;
+      if (Array.isArray(val)) return val.length === MAX;
+      return MAX === 1 && val !== "0" && val !== "";
+    });
+
+    if (allTasksCompleted) {
+      const summary = getSummaryDates();
+      list.innerHTML = summary
+        .map(
+          (e) =>
+            `<li><strong>${e.task}</strong> (${e.denkweisen.join(", ")}): ${
+              e.date
+            }</li>`
+        )
+        .join("");
+      container.style.display = "";
+    } else {
+      container.style.display = "none";
+    }
+  }
+
+  function updateAllTaskDateDisplays() {
+    document.querySelectorAll(".task").forEach((taskDiv) => {
+      const dateOutput = taskDiv.querySelector(".date-fields-output");
+      if (!dateOutput) return;
+
+      const taskType = taskDiv.dataset.field;
+      const maxRequired = parseInt(taskDiv.dataset.max, 10);
+      const groupDay = getSelectedGroupDay();
+
+      // find checked checkboxes
+      const checked = Array.from(
+        taskDiv.querySelectorAll('input[type="checkbox"]:checked')
+      );
+
+      // find selected dropdowns
+      const selectedDropdowns = Array.from(
+        taskDiv.querySelectorAll("select")
+      ).filter((sel) => sel.value && sel.value !== "0");
+
+      const totalSelected = checked.length + selectedDropdowns.length;
+
+      // only show date if enough Denkweisen are selected
+      if (totalSelected === maxRequired) {
+        let selectedLabel = null;
+
+        if (checked.length > 0) {
+          selectedLabel = checked[0].nextElementSibling?.innerText?.trim();
+        } else if (selectedDropdowns.length > 0) {
+          selectedLabel = selectedDropdowns[0].value;
+        }
+
+        const date = getDateByTaskType(taskType, groupDay, selectedLabel);
+        if (date !== "Unbekannt") {
+          dateOutput.textContent = `Abgabe: ${date}`;
+          dateOutput.style.display = "block";
+        } else {
+          dateOutput.textContent = "";
+          dateOutput.style.display = "none";
+        }
+      } else {
+        // not enough selections - hide output - as otherwise it would be "larger" than usual box size
+        dateOutput.textContent = "";
+        dateOutput.style.display = "none";
+      }
+    });
+  }
+
+  // ######################################
+  // Restore globalSelections map upon page load
+  // ######################################
+
+  function rebuildSelectionsFromDOM() {
+    globalSelections.clear();
+    // For selects (single selection per task)
+    document.querySelectorAll(".task select").forEach((select) => {
+      const taskType = select.closest(".task").dataset.field;
+      if (select.value && select.value !== "0") {
+        globalSelections.set(taskType, select.value);
+      }
+    });
+    // For checkboxes (possibly multiple per task)
+    document.querySelectorAll(".task").forEach((task) => {
+      const taskType = task.dataset.field;
+      const checked = Array.from(
+        task.querySelectorAll("input[type=checkbox]:checked")
+      ).map((cb) => cb.value);
+      if (checked.length > 0) {
+        globalSelections.set(taskType, checked);
+      }
+    });
+  }
+
+  function afterAnyChange() {
+    rebuildSelectionsFromDOM();
+    disableGloballySelectedOptions();
+    showDatesSummaryIfComplete();
+    updateAllTaskDateDisplays();
+    updateDenkweisenStatusBar();
+    //checkIfSelectionIsValid(); Optional: Validate selections after any change (instead of only on check)
+  }
+
+  window.addEventListener("beforeunload", (event) => {
+    // Save global selections to localStorage before leaving
+    localStorage.setItem(
+      "globalSelections",
+      JSON.stringify([...globalSelections])
+    );
+
+    //!!!! DAS FINDE ICH EHER VERWIRREND, WENN MAN BEIM SPEICHERN AUCH EINE NACHRICHT BEKOMMT, DASS MAN DIE SEITE VERLÄSST !!!! //
+    //const confirmationMessage =
+    // "Sind Sie sicher, dass Sie die Seite verlassen möchten? Ihre Änderungen gehen verloren.";
+    //event.returnValue = confirmationMessage; // For most browsers
+    //return confirmationMessage; // For older browsers
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    setupEvents();
+    rebuildSelectionsFromDOM();
+    afterAnyChange();
+  });
+</script>

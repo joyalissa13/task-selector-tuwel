@@ -47,8 +47,8 @@ Diese sind verbunden mit der Anzahl der erlaubten Denkweisen, die zu dem jeweili
 ### getDateByTaskType (...)
 Diese Funktion beinhaltet die Logik, wie das Datum der Abgabe berechnet wird. Diese ist jährlich zu überprüfen und zu aktualisieren.
 
-
-__________________________________________________________
+## Importieren
+Laden Sie den gesamten Ordner ‚Auswahl Denkweisen-parset-…‘ als ZIP-Datei herunter und importieren Sie ihn anschließend in TUWEL als Vorlage.__________________________________________________________
 
 # task-selector-tuwel
 
@@ -99,3 +99,6 @@ These are linked with the number of allowed ways of thinking that must be select
 
 ### getDateByTaskType (...)
 This function contains the logic for how the due date is calculated. It must be reviewed and updated annually.
+
+## Import
+Download the entire folder ‘Auswahl Denkweisen-parset-…’ as a ZIP file and then import it into TUWEL as a template.

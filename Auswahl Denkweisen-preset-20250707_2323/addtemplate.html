@@ -395,7 +395,12 @@
         </button>
       </div>
       <div class="button-center">
-        <button type="button" id="download-ical" class="as-link">
+        <button
+          type="button"
+          id="download-ical"
+          style="display: none"
+          class="as-link"
+        >
           📅 Termine als iCal herunterladen
         </button>
       </div>
@@ -774,6 +779,10 @@
       status.className = "";
     }
 
+    // Hide the iCal download button
+    const icalBtn = document.getElementById("download-ical");
+    if (icalBtn) icalBtn.style.display = "none";
+
     globalSelections.clear();
     afterAnyChange();
   }
@@ -790,6 +799,11 @@
     rebuildSelectionsFromDOM();
     const status = document.getElementById("status-message");
     const valid = checkIfSelectionIsValid();
+
+    const icalBtn = document.getElementById("download-ical");
+    if (valid && icalBtn) {
+      icalBtn.style.display = valid ? "flex" : "none";
+    }
 
     status.textContent = valid
       ? "✅ Alle Denkweisen korrekt ausgewählt! Sie können Ihre Einträge nun speichern."

@@ -212,6 +212,7 @@
     align-items: center;
     margin-top: 40px;
     gap: 12px;
+    flex-wrap: nowrap;
   }
 
   .button-left,
@@ -231,6 +232,23 @@
 
   .button-right {
     justify-content: flex-end;
+  }
+
+  @media (max-width: 600px) {
+    .button-row {
+      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    .button-left,
+    .button-center,
+    .button-right {
+      flex: none;
+      width: 100%;
+      justify-content: center;
+    }
   }
 
   #global-reset.as-link {

@@ -206,31 +206,31 @@
   }
 
   /* ==== Layout Utilities ===== */
-  .export-and-check-container {
+  .button-row {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    gap: 16px;
-    margin-top: 24px;
+    margin-top: 40px;
+    gap: 12px;
   }
 
-  .überprüfungsbutton {
+  .button-left,
+  .button-center,
+  .button-right {
+    flex: 1;
     display: flex;
-    justify-content: right;
-    text-align: left;
-    margin-top: 24px;
   }
 
-  .global-reset-container {
-    display: flex;
-    justify-content: left;
-    text-align: center;
-    margin-top: 36px;
+  .button-left {
+    justify-content: flex-start;
   }
 
-  .ical-download {
-    text-align: left;
-    margin-top: 24px;
+  .button-center {
+    justify-content: center;
+  }
+
+  .button-right {
+    justify-content: flex-end;
   }
 
   #global-reset.as-link {
@@ -386,24 +386,22 @@
       ></ul>
     </div>
 
-    <div class="export-and-check-container">
-      <div class="global-reset-container">
+    <div id="status-message" style="display: none"></div>
+
+    <div class="button-row">
+      <div class="button-left">
         <button type="button" id="global-reset" class="as-link">
           Alles zurücksetzen
         </button>
       </div>
-
-      <div class="überprüfungsbutton">
-        <button type="button" id="check-selections">Überprüfen</button>
-        <div id="status-message" style="display: none"></div>
-      </div>
-
-      <div class="ical-download">
+      <div class="button-center">
         <button type="button" id="download-ical" class="as-link">
           📅 Termine als iCal herunterladen
         </button>
       </div>
-      <!-- === End Section Dates & Export iCal File === -->
+      <div class="button-right">
+        <button type="button" id="check-selections">Überprüfen</button>
+      </div>
     </div>
   </div>
 </body>

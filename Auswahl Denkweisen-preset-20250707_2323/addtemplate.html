@@ -779,6 +779,14 @@
       status.className = "";
     }
 
+    // Hide the dates summary
+    const datesSummary = document.getElementById("dates-summary-container");
+    if (datesSummary) {
+      datesSummary.style.display = "none";
+      const datesList = document.getElementById("dates-summary-list");
+      if (datesList) datesList.innerHTML = "";
+    }
+
     // Hide the iCal download button
     const icalBtn = document.getElementById("download-ical");
     if (icalBtn) icalBtn.style.display = "none";
@@ -1105,15 +1113,21 @@
   function showDatesSummaryIfComplete() {
     const container = document.getElementById("dates-summary-container");
     const list = document.getElementById("dates-summary-list");
+    const valid = checkIfSelectionIsValid();
 
-    const allTasksCompleted = TASKS.Formate.every(({ TYPE, MAX }) => {
-      const val = globalSelections.get(TYPE);
-      if (!val) return false;
-      if (Array.isArray(val)) return val.length === MAX;
-      return MAX === 1 && val !== "0" && val !== "";
-    });
+    // If you want to check if all tasks are completed, without having to click
+    // the "Check Selections" button, you can uncomment the following code.
+    // also, uncomment the checkIfSelectionIsValid() call in afterAnyChange()
+    // *
+    // * HERE UNCOMMENT TO ENABLE THIS CHECK *
+    //const allTasksCompleted = TASKS.Formate.every(({ TYPE, MAX }) => {
+    //const val = globalSelections.get(TYPE);
+    //if (!val) return false;
+    //if (Array.isArray(val)) return val.length === MAX;
+    //return MAX === 1 && val !== "0" && val !== "";
+    //});
 
-    if (allTasksCompleted) {
+    if (valid) {
       const summary = getSummaryDates();
       list.innerHTML = summary
         .map(
@@ -1204,9 +1218,9 @@
   function afterAnyChange() {
     rebuildSelectionsFromDOM();
     disableGloballySelectedOptions();
-    showDatesSummaryIfComplete();
     updateAllTaskDateDisplays();
     updateDenkweisenStatusBar();
+    // showDatesSummaryIfComplete(); only show after check button is clicked
     //checkIfSelectionIsValid(); Optional: Validate selections after any change (instead of only on check)
   }
 

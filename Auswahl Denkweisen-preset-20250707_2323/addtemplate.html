@@ -605,6 +605,15 @@
    * @returns {boolean} True if all task selections are valid, false otherwise.
    */
   function checkIfSelectionIsValid() {
+    const group = getSelectedGroupDay();
+    if (!group) {
+      const status = document.getElementById("status-message");
+      status.textContent = "❌ Bitte wählen Sie Ihre Gruppe aus!";
+      status.className = "status-error";
+      status.style.display = "block";
+      return false;
+    }
+    
     let valid = true;
 
     TASKS.Formate.forEach(({ TYPE, MAX }) => {

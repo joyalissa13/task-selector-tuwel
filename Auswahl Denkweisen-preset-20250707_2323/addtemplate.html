@@ -206,13 +206,30 @@
   }
 
   /* ==== Layout Utilities ===== */
+  .export-and-check-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .überprüfungsbutton {
+    display: flex;
+    justify-content: right;
+    text-align: left;
+    margin-top: 24px;
+  }
+
   .global-reset-container {
-    text-align: right;
+    display: flex;
+    justify-content: left;
+    text-align: center;
     margin-top: 36px;
   }
 
   .ical-download {
-    text-align: center;
+    text-align: left;
     margin-top: 24px;
   }
 
@@ -279,16 +296,18 @@
 <body>
   <div class="instruction">
     <p>
-      Hier wählen Sie für jede Aufgabe die Denkweise(n) aus, die Sie dazu bearbeiten  möchten. 
-      Achten Sie darauf, dass jede Denkweise  nur einmal gewählt wird und dass Sie insgesamt
+      Hier wählen Sie für jede Aufgabe die Denkweise(n) aus, die Sie dazu
+      bearbeiten möchten. Achten Sie darauf, dass jede Denkweise nur einmal
+      gewählt wird und dass Sie insgesamt
       <strong>8 Denkweisen</strong> auswählen.
     </p>
 
     <p>
       Wenn Sie fertig mit dem Eintragen sind, klicken Sie auf
-      <strong>"Überprüfen"</strong> (ganz unten). Erst wenn Ihre Auswahl den Kriterien entspricht,
-      wird ein <strong>grünes Hackerl</strong> angezeigt. Sie können Ihren Eintrag dann speichern, 
-      und auch die Termine als iCal für Ihren lokalen Kalender exportieren.
+      <strong>"Überprüfen"</strong> (ganz unten). Erst wenn Ihre Auswahl den
+      Kriterien entspricht, wird ein <strong>grünes Hackerl</strong> angezeigt.
+      Sie können Ihren Eintrag dann speichern, und auch die Termine als iCal für
+      Ihren lokalen Kalender exportieren.
     </p>
 
     <p>Bei Unterstützungsbedarf wenden Sie sich an Ihre:n Tutor:in.</p>
@@ -367,23 +386,25 @@
       ></ul>
     </div>
 
-    <div class="global-reset-container">
-      <button type="button" id="global-reset" class="as-link">
-        Alles zurücksetzen
-      </button>
-    </div>
+    <div class="export-and-check-container">
+      <div class="global-reset-container">
+        <button type="button" id="global-reset" class="as-link">
+          Alles zurücksetzen
+        </button>
+      </div>
 
-    <div class="überprüfungsbutton">
-      <button type="button" id="check-selections">Überprüfen</button>
-      <div id="status-message" style="display: none"></div>
-    </div>
+      <div class="überprüfungsbutton">
+        <button type="button" id="check-selections">Überprüfen</button>
+        <div id="status-message" style="display: none"></div>
+      </div>
 
-    <div class="ical-download">
-      <button type="button" id="download-ical" class="as-link">
-        📅 Termine als iCal herunterladen
-      </button>
+      <div class="ical-download">
+        <button type="button" id="download-ical" class="as-link">
+          📅 Termine als iCal herunterladen
+        </button>
+      </div>
+      <!-- === End Section Dates & Export iCal File === -->
     </div>
-    <!-- === End Section Dates & Export iCal File === -->
   </div>
 </body>
 
